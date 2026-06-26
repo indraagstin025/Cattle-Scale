@@ -7,6 +7,9 @@ export async function addTimbangan(data) {
     data: { 
       id: Date.now(), 
       tanggal_timbang: new Date().toISOString(), 
+      jenis_rumpun: data.jenis_rumpun || "Unknown",
+      adg: 0.0,
+      prediksi_berat_30_hari: data.berat_kg || 0,
       ...data 
     } 
   };
@@ -17,8 +20,8 @@ export async function getAllTimbangan() {
   return {
     success: true,
     data: [
-      { id: 1, nama_sapi: "Bima", rfid: "RFID-12345", berat_kg: 450.5, status_kesehatan: "Sehat", jenis_sapi: "Brahman", umur_bulan: 24, tanggal_timbang: new Date(Date.now() - 86400000).toISOString() },
-      { id: 2, nama_sapi: "Seno", rfid: "RFID-67890", berat_kg: 512.0, status_kesehatan: "Sehat", jenis_sapi: "Limousin", umur_bulan: 30, tanggal_timbang: new Date().toISOString() }
+      { id: 1, nama_sapi: "Bima", rfid: "RFID-12345", berat_kg: 450.5, status_kesehatan: "Sehat", jenis_rumpun: "Brahman", umur_bulan: 24, tanggal_timbang: new Date(Date.now() - 86400000).toISOString(), adg: 1.2, prediksi_berat_30_hari: 486.5 },
+      { id: 2, nama_sapi: "Seno", rfid: "RFID-67890", berat_kg: 512.0, status_kesehatan: "Sehat", jenis_rumpun: "Limousin", umur_bulan: 30, tanggal_timbang: new Date().toISOString(), adg: 1.5, prediksi_berat_30_hari: 557.0 }
     ]
   };
 }
