@@ -11,10 +11,22 @@ export default function Sidebar({
   onConnectWifi,
   onDisconnectWifi,
   serialError,
-  wsError
+  wsError,
+  isOpen,
+  onClose
 }) {
   return (
-    <aside className="w-80 h-screen glass-panel flex flex-col justify-between p-6 border-r border-slate-800">
+    <>
+      {/* Mobile Overlay */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
+          onClick={onClose}
+        ></div>
+      )}
+      
+      {/* Sidebar Panel */}
+      <aside className={`fixed lg:static top-0 left-0 z-50 w-80 h-screen glass-panel bg-slate-950 lg:bg-transparent flex flex-col justify-between p-6 border-r border-slate-800 transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
       
       {/* Header & Logo */}
       <div className="flex flex-col gap-6">
@@ -126,5 +138,6 @@ export default function Sidebar({
       </div>
 
     </aside>
+    </>
   );
 }

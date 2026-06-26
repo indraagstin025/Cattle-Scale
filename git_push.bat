@@ -1,3 +1,3 @@
 git add .
-git commit -m "fix: add missing fields to mock data to prevent toFixed crash in dashboard"
+git commit -m "feat: make dashboard responsive and add mobile sidebar toggle"
 git push origin main

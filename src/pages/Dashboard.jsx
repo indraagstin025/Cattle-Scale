@@ -9,7 +9,7 @@ import { useWebSerial } from '../hooks/useWebSerial';
 import { useWebSocketLive } from '../hooks/useWebSocketLive';
 import { getAllTimbangan, addTimbangan, deleteTimbangan, downloadExcel, downloadWord } from '../api/timbangan';
 
-import { Beef, Database, Calendar } from 'lucide-react';
+import { Beef, Database, Calendar, Menu } from 'lucide-react';
 
 export default function Dashboard({ user, onLogout }) {
   // 1. Integrasi Hardware Hooks
@@ -23,6 +23,7 @@ export default function Dashboard({ user, onLogout }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // 3. Muat Data Riwayat dari Database saat mount
   useEffect(() => {
@@ -140,6 +141,8 @@ export default function Dashboard({ user, onLogout }) {
         onDisconnectWifi={wifi.disconnectWebSocket}
         serialError={usb.error}
         wsError={wifi.error}
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
       />
 
       {/* Main Content Workspace */}
@@ -147,9 +150,17 @@ export default function Dashboard({ user, onLogout }) {
         
         {/* Header Dashboard */}
         <div className="flex justify-between items-center border-b border-slate-800/60 pb-5 flex-wrap gap-4">
-          <div>
-            <h1 className="text-3xl font-extrabold text-white tracking-tight">DASHBOARD UTAMA</h1>
-            <p className="text-xs text-slate-400 font-semibold tracking-wider uppercase mt-1">Panel Monitoring Timbangan Sapi Portable</p>
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={() => setIsSidebarOpen(true)}
+              className="lg:hidden p-2 rounded-lg bg-slate-800/60 text-white hover:bg-slate-700 transition-colors"
+            >
+              <Menu className="w-6 h-6" />
+            </button>
+            <div>
+              <h1 className="text-3xl md:text-3xl text-2xl font-extrabold text-white tracking-tight">DASHBOARD UTAMA</h1>
+              <p className="text-xs text-slate-400 font-semibold tracking-wider uppercase mt-1">Panel Monitoring Timbangan Sapi Portable</p>
+            </div>
           </div>
           <div className="text-right text-xs text-slate-400 font-semibold">
             Tanggal Hari Ini: <span className="text-white font-mono">{new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>
