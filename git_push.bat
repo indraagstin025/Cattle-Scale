@@ -1,3 +1,3 @@
 git add .
-git commit -m "feat: add premium landing page with new routing"
+git commit -m "fix: mock login response flag and remove hard redirect"
 git push origin main

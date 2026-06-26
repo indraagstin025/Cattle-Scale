@@ -5,6 +5,7 @@ import client from './client';
  */
 export async function login(username, password) {
   return { 
+    success: true,
     token: "dummy_token_123", 
     user: { id: 1, username: username } 
   };

@@ -45,7 +45,6 @@ export function useAuth() {
     localStorage.removeItem('user');
     setUser(null);
     setIsAuthenticated(false);
-    window.location.href = '/login';
   };
 
   return {
