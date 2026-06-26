@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
@@ -6,15 +7,17 @@ import { useAuth } from './hooks/useAuth';
 
 export default function App() {
   const auth = useAuth();
-  const [currentPage, setCurrentPage] = useState('login');
+  const [currentPage, setCurrentPage] = useState('landing');
 
   // Sinkronisasi halaman dengan status autentikasi JWT
   useEffect(() => {
     if (auth.isAuthenticated) {
       setCurrentPage('dashboard');
     } else {
+      // Jika tidak terautentikasi dan sedang berada di dashboard (misal karena logout),
+      // maka kembalikan ke halaman landing
       if (currentPage === 'dashboard') {
-        setCurrentPage('login');
+        setCurrentPage('landing');
       }
     }
   }, [auth.isAuthenticated]);
@@ -39,11 +42,18 @@ export default function App() {
           />
         );
       case 'login':
-      default:
         return (
           <Login
             loginOperator={auth.loginOperator}
             onLoginSuccess={() => setCurrentPage('dashboard')}
+            onNavigateToRegister={() => setCurrentPage('register')}
+          />
+        );
+      case 'landing':
+      default:
+        return (
+          <Landing
+            onNavigateToLogin={() => setCurrentPage('login')}
             onNavigateToRegister={() => setCurrentPage('register')}
           />
         );
