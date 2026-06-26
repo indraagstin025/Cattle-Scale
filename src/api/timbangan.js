@@ -1,70 +1,54 @@
 import client from './client';
 
-// 1. Tambah data penimbangan baru
+// 1. Tambah data penimbangan baru (MOCK)
 export async function addTimbangan(data) {
-  const response = await client.post('/timbangan', data);
-  return response.data;
+  return { 
+    success: true, 
+    data: { 
+      id: Date.now(), 
+      tanggal_timbang: new Date().toISOString(), 
+      ...data 
+    } 
+  };
 }
 
-// 2. Ambil semua riwayat penimbangan
+// 2. Ambil semua riwayat penimbangan (MOCK)
 export async function getAllTimbangan() {
-  const response = await client.get('/timbangan');
-  return response.data;
+  return {
+    success: true,
+    data: [
+      { id: 1, nama_sapi: "Bima", rfid: "RFID-12345", berat_kg: 450.5, status_kesehatan: "Sehat", jenis_sapi: "Brahman", umur_bulan: 24, tanggal_timbang: new Date(Date.now() - 86400000).toISOString() },
+      { id: 2, nama_sapi: "Seno", rfid: "RFID-67890", berat_kg: 512.0, status_kesehatan: "Sehat", jenis_sapi: "Limousin", umur_bulan: 30, tanggal_timbang: new Date().toISOString() }
+    ]
+  };
 }
 
-// 3. Ambil data penimbangan berdasarkan ID
+// 3. Ambil data penimbangan berdasarkan ID (MOCK)
 export async function getTimbanganById(id) {
-  const response = await client.get(`/timbangan/${id}`);
-  return response.data;
+  return { 
+    success: true, 
+    data: { 
+      id, nama_sapi: "Bima", rfid: "RFID-12345", berat_kg: 450.5, status_kesehatan: "Sehat", jenis_sapi: "Brahman", umur_bulan: 24, tanggal_timbang: new Date().toISOString() 
+    } 
+  };
 }
 
-// 4. Perbarui data penimbangan
+// 4. Perbarui data penimbangan (MOCK)
 export async function updateTimbangan(id, data) {
-  const response = await client.put(`/timbangan/${id}`, data);
-  return response.data;
+  return { success: true, data: { id, ...data } };
 }
 
-// 5. Hapus data penimbangan
+// 5. Hapus data penimbangan (MOCK)
 export async function deleteTimbangan(id) {
-  const response = await client.delete(`/timbangan/${id}`);
-  return response.data;
+  return { success: true, message: "Data berhasil dihapus (MOCK)" };
 }
 
-// 6. Download Rekapitulasi Excel secara aman (mengirimkan header JWT)
+// 6. Download Rekapitulasi Excel secara aman (MOCK)
 export async function downloadExcel(startDate, endDate) {
-  const response = await client.get(`/timbangan/ekspor/excel`, {
-    params: { start_date: startDate, end_date: endDate },
-    responseType: 'blob' // Wajib blob untuk file binary
-  });
-
-  // Trik trigger download browser
-  const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-  const url = window.URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.setAttribute('download', `rekap-timbangan-${startDate}-ke-${endDate}.xlsx`);
-  document.body.appendChild(link);
-  link.click();
-  
-  // Bersihkan
-  link.parentNode.removeChild(link);
-  window.URL.revokeObjectURL(url);
+  alert("Mode Simulasi: Fitur unduh Excel dimatikan sementara karena API backend belum di-deploy.");
 }
 
-// 7. Download Sertifikat Word secara aman (mengirimkan header JWT)
+// 7. Download Sertifikat Word secara aman (MOCK)
 export async function downloadWord(id, namaSapi) {
-  const response = await client.get(`/timbangan/ekspor/word/${id}`, {
-    responseType: 'blob'
-  });
-
-  const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
-  const url = window.URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.setAttribute('download', `sertifikat-${namaSapi.toUpperCase()}-${id}.docx`);
-  document.body.appendChild(link);
-  link.click();
-
-  link.parentNode.removeChild(link);
-  window.URL.revokeObjectURL(url);
+  alert("Mode Simulasi: Fitur unduh Sertifikat Word dimatikan sementara karena API backend belum di-deploy.");
 }

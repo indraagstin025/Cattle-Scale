@@ -1,23 +1,18 @@
 import client from './client';
 
 /**
- * Melakukan login operator
- * @param {string} username 
- * @param {string} password 
- * @returns {Promise<object>}
+ * Melakukan login operator (MOCK untuk Vercel)
  */
 export async function login(username, password) {
-  const response = await client.post('/auth/login', { username, password });
-  return response.data;
+  return { 
+    token: "dummy_token_123", 
+    user: { id: 1, username: username } 
+  };
 }
 
 /**
- * Melakukan registrasi operator baru
- * @param {string} username 
- * @param {string} password 
- * @returns {Promise<object>}
+ * Melakukan registrasi operator baru (MOCK untuk Vercel)
  */
 export async function register(username, password) {
-  const response = await client.post('/auth/register', { username, password });
-  return response.data;
+  return { success: true, message: "Pendaftaran berhasil (MOCK)" };
 }
